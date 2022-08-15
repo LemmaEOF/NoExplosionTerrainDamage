@@ -16,8 +16,14 @@ public class MixinExplosion {
 	@Mutable
 	private Explosion.DestructionType destructionType;
 
+	@Shadow
+	@Final
+	@Mutable
+	private boolean createFire;
+
 	@Inject(method = "<init>(Lnet/minecraft/world/World;Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/damage/DamageSource;Lnet/minecraft/world/explosion/ExplosionBehavior;DDDFZLnet/minecraft/world/explosion/Explosion$DestructionType;)V", at = @At("RETURN"))
 	private void forceNoneDestructionType(CallbackInfo info) {
 		this.destructionType = Explosion.DestructionType.NONE;
+		this.createFire = false;
 	}
 }
